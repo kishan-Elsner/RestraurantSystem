@@ -1,0 +1,25 @@
+->app
+---->Orders
+======Order.html,Order.js,Order.css
+
+-------->Order
+======Order.html,Order.js,Order.css
+
+-------->Order.items
+======Order-Details,Order.html,Order-Details.
+
+
+
+shared
+-Customer.model.ts
+-Customer.service.ts
+-item.model.ts
+-item.service.ts
+-order.model.model.ts
+-order.model.ts
+-order.service.ts
+
+enviroments
+--enviroments.js(save apiUrl)
+
+index.html

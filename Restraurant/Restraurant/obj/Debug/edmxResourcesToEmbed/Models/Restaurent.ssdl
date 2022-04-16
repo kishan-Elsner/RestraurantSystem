@@ -1,0 +1,91 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="RestraurantDbModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityType Name="Customber">
+    <Key>
+      <PropertyRef Name="CustomberId" />
+    </Key>
+    <Property Name="CustomberId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+  </EntityType>
+  <EntityType Name="Item">
+    <Key>
+      <PropertyRef Name="ItemID" />
+    </Key>
+    <Property Name="ItemID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Name" Type="varchar" MaxLength="50" />
+    <Property Name="Price" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Order">
+    <Key>
+      <PropertyRef Name="OrderID" />
+    </Key>
+    <Property Name="OrderID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderNo" Type="varchar" MaxLength="50" />
+    <Property Name="CustomberId" Type="int" />
+    <Property Name="PMethod" Type="varchar" MaxLength="50" />
+    <Property Name="GTotal" Type="decimal" Precision="18" Scale="2" />
+  </EntityType>
+  <EntityType Name="Orderitems">
+    <Key>
+      <PropertyRef Name="OrderitemID" />
+    </Key>
+    <Property Name="OrderitemID" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="OrderID" Type="bigint" />
+    <Property Name="ItemID" Type="int" />
+    <Property Name="Quantity" Type="int" />
+  </EntityType>
+  <Association Name="FK_Order_Customber">
+    <End Role="Customber" Type="Self.Customber" Multiplicity="0..1" />
+    <End Role="Order" Type="Self.Order" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Customber">
+        <PropertyRef Name="CustomberId" />
+      </Principal>
+      <Dependent Role="Order">
+        <PropertyRef Name="CustomberId" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orderitems_Item">
+    <End Role="Item" Type="Self.Item" Multiplicity="0..1" />
+    <End Role="Orderitems" Type="Self.Orderitems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Item">
+        <PropertyRef Name="ItemID" />
+      </Principal>
+      <Dependent Role="Orderitems">
+        <PropertyRef Name="ItemID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Orderitems_Order">
+    <End Role="Order" Type="Self.Order" Multiplicity="0..1" />
+    <End Role="Orderitems" Type="Self.Orderitems" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Order">
+        <PropertyRef Name="OrderID" />
+      </Principal>
+      <Dependent Role="Orderitems">
+        <PropertyRef Name="OrderID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <EntityContainer Name="RestraurantDbModelStoreContainer">
+    <EntitySet Name="Customber" EntityType="Self.Customber" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Item" EntityType="Self.Item" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Order" EntityType="Self.Order" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Orderitems" EntityType="Self.Orderitems" Schema="dbo" store:Type="Tables" />
+    <AssociationSet Name="FK_Order_Customber" Association="Self.FK_Order_Customber">
+      <End Role="Customber" EntitySet="Customber" />
+      <End Role="Order" EntitySet="Order" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orderitems_Item" Association="Self.FK_Orderitems_Item">
+      <End Role="Item" EntitySet="Item" />
+      <End Role="Orderitems" EntitySet="Orderitems" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Orderitems_Order" Association="Self.FK_Orderitems_Order">
+      <End Role="Order" EntitySet="Order" />
+      <End Role="Orderitems" EntitySet="Orderitems" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>
